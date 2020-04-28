@@ -7,7 +7,9 @@ String basePath = 'example-path'
 String repo = 'jenkins-training/tech-example-java'
 
 
-baseImageJobBuilder.job("Catroid_to_Google_Play_alpha") {
-    htmlDescription(['test'])
+baseImageJobBuilder.job("Docker_Base_Image") {
+    htmlDescription(['Builds the Docker Base Image'])
+
+    git(branch: '${gitBranch}', jenkinsfile: 'Jenkinsfile.baseDocker')
 
 }
