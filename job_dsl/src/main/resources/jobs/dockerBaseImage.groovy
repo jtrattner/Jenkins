@@ -1,6 +1,6 @@
 // The file should not be named jenkins.groovy as that leads to a warning as there
 // is already a jenkins package.
-def jobBuilder = new JobsBuilder(this).folder('lab/Johannes_Trattner/generated_job_test', {})
+def jobBuilder = new JobsBuilder(this).folder('', {})
 def baseImageJobBuilder = jobBuilder.pipeline()
 
 
