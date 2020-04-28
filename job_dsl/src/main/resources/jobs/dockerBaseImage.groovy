@@ -3,12 +3,9 @@
 def releaseJobBuilder = new JobsBuilder(this).folder('lab/Johannes_Trattner/generated_job_test', {})
 def baseImageJobBuilder = releaseJobBuilder.pipeline()
 
-String basePath = 'example-path'
-String repo = 'jenkins-training/tech-example-java'
 
-
-baseImageJobBuilder.job("Docker_Base_Image") {
-    htmlDescription(['Builds the Docker Base Image'])
+baseImageJobBuilder.job("Build_Docker_Base_Image") {
+    htmlDescription(['Builds the docker base Image and pushes it to the dockerhub'])
 
     git(repo: 'https://github.com/Catrobat/Catroid', branch: '${gitBranch}', jenkinsfile: 'Jenkinsfile.baseDocker')
 
