@@ -6,7 +6,7 @@ pipeline {
             steps{
                 script{
                     stage("create Jobs"){
-                            jobDsl targets: 'job_dsl/src/main/resources/jobs/*.groovy',
+                            jobDsl targets: 'job_dsl/src/main/resources/jobs/dockerBaseImage.groovy',
                             additionalClasspath: 'job_dsl/src/main/lib/',
                             failOnMissingPlugin: true,
                             removedJobAction: 'DELETE',
@@ -20,7 +20,7 @@ pipeline {
 
     post {
         always {
-            sendNotifications()
+            echo "done"
         }
     }
 }
