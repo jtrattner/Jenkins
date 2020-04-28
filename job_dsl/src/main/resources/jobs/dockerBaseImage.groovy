@@ -1,7 +1,7 @@
 // The file should not be named jenkins.groovy as that leads to a warning as there
 // is already a jenkins package.
-def releaseJobBuilder = new JobsBuilder(this).folder('lab/Johannes_Trattner/generated_job_test', {})
-def baseImageJobBuilder = releaseJobBuilder.pipeline()
+def jobBuilder = new JobsBuilder(this).folder('lab/Johannes_Trattner/generated_job_test', {})
+def baseImageJobBuilder = jobBuilder.pipeline()
 
 
 baseImageJobBuilder.job("Build_Docker_Base_Image") {
