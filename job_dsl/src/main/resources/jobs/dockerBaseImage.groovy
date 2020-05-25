@@ -2,7 +2,7 @@
 // is already a jenkins package.
 //def jobBuilder = new JobsBuilder(this).folder('', {})
 //def jobBuilder = new JobsBuilder(this)
-def baseImageJobBuilder = new JobsBuilder(this).pipeline()
+def baseImageJobBuilder = new JobsBuilder(this).folder('lab/Johannes_Trattner').pipeline()
 
 
 baseImageJobBuilder.job("Build_Docker_Base_Image") {
@@ -17,5 +17,6 @@ baseImageJobBuilder.job("Build_Docker_Base_Image") {
             defaultValue('origin/master')
         }
     }
+    nightly()
 
 }
