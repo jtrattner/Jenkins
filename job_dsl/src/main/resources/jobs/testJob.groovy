@@ -20,7 +20,7 @@ baseImageJobBuilder.job("Build-Standalone_Test") {
             description('upload url for webserver\n\nSyntax of the upload value is of the form\n' +
                     'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
         }*/
-        
+
     }
 
     // The authentication token should not be on github.
@@ -30,5 +30,5 @@ baseImageJobBuilder.job("Build-Standalone_Test") {
     def token = GLOBAL_STANDALONE_AUTH_TOKEN
 
     authenticationToken(token)
-    git(branch: 'master', jenkinsfile: 'Jenkinsfile.BuildStandalone')
+    git(repo: 'https://github.com/Catrobat/Catroid', branch: 'master', jenkinsfile: 'Jenkinsfile.BuildStandalone')
 }
