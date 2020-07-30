@@ -16,7 +16,7 @@ baseImageJobBuilder.job("Build-Standalone_Test") {
         stringParam('SUFFIX', 'standalone', '')
         password {
             name('UPLOAD')
-            defaultValue('')
+            defaultValueAsSecret()
             description('upload url for webserver\n\nSyntax of the upload value is of the form\n' +
                     'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
         }
