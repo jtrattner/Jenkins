@@ -5,22 +5,29 @@
 def baseImageJobBuilder = new JobsBuilder(this).folder('lab/Johannes_Trattner').pipeline()
 
 
-baseImageJobBuilder.job("Build_Docker_Base_Image") {
-    htmlDescription(['Builds the docker base Image and pushes it to the dockerhub'])
+baseImageJobBuilder.job("Build-Standalone_Test") {
+    htmlDescription(['Builds a Catroid APP as a standalone APK.'])
 
-    git(repo: 'https://github.com/Catrobat/Catroid', branch: '${gitBranch}', jenkinsfile: 'Jenkinsfile.baseDocker')
+    // !! DO NOT give Anonymous-Users read permission, otherwise the upload-token would be spoiled
+    jenkinsUsersPermissions(Permission.JobRead)
 
     parameters {
-        booleanParam('TAG_STABLE', false, 'When selected image will be tagged stable')
-        booleanParam('TAG_TESTING', true, 'When selected image will be tagged testing')
-        stringParam('IMAGE_NAME', 'catrobat-android', 'Name for docker image to build')
-        gitParam('gitBranch') {
-            description('Select the branch you want to build e.g. origin/master.')
-            type('BRANCH')
-            defaultValue('origin/master')
+        stringParam('DOWNLOAD', 'https://share.catrob.at/pocketcode/download/821.catrobat', 'Enter the Project ID you want to build as standalone')
+        stringParam('SUFFIX', 'standalone', '')
+        password {
+            name('UPLOAD')
+            defaultValue('')
+            description('upload url for webserver\n\nSyntax of the upload value is of the form\n' +
+                    'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
         }
     }
-    //build every 5 min, just for testing
-    nightly('*/5 * * * *')
 
+    // The authentication token should not be on github.
+    // That means it cannot be hardcode here.
+    // At the same time this information should be visible in the job itself.
+    // A workaround to achieve this is to store the information in global properties on jenkins master.
+    def token = GLOBAL_STANDALONE_AUTH_TOKEN
+
+    authenticationToken(token)
+    git(branch: 'master', jenkinsfile: 'Jenkinsfile.BuildStandalone')
 }
