@@ -1,0 +1,26 @@
+pipeline {
+    agent { label "master"}
+
+    stages{
+        stage('init'){
+            steps{
+                script{
+                    stage("create Jobs"){
+                            jobDsl targets: 'job_dsl/src/main/resources/jobs/testJob.groovy',
+                            additionalClasspath: 'job_dsl/src/main/lib/',
+                            failOnMissingPlugin: true,
+                            removedJobAction: 'DELETE',
+                            removedViewAction: 'DELETE',
+                            unstableOnDeprecation: true
+                   }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "done"
+        }
+    }
+}
