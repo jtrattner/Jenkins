@@ -14,12 +14,12 @@ baseImageJobBuilder.job("Build-Standalone_Test") {
     parameters {
         stringParam('DOWNLOAD', 'https://share.catrob.at/pocketcode/download/821.catrobat', 'Enter the Project ID you want to build as standalone')
         stringParam('SUFFIX', 'standalone', '')
-        password {
+       /* password {
             name('UPLOAD')
             setDefaultValue('')
             description('upload url for webserver\n\nSyntax of the upload value is of the form\n' +
                     'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
-        }
+        }*/
         nonStoredPasswordParam('myParameterName', 'my description')
     }
 
