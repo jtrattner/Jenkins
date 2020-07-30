@@ -19,9 +19,15 @@ baseImageJobBuilder.job("Build-Standalone_Test") {
             setDefaultValue('')
             description('upload url for webserver\n\nSyntax of the upload value is of the form\n' +
                     'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
-        }*/
+        }
         passwordParameterDefinition {
             name('UPLOAD')
+            description('upload url for webserver\n\nSyntax of the upload value is of the form\n' +
+                    'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
+        }
+*/
+        credentialsParam('UPLOAD') {
+            defaultValue('')
             description('upload url for webserver\n\nSyntax of the upload value is of the form\n' +
                     'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
         }
