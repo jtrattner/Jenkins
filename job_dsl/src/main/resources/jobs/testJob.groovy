@@ -19,7 +19,8 @@ baseImageJobBuilder.job("Build-Standalone_Test") {
             description('upload url for webserver\n\nSyntax of the upload value is of the form\n' +
                     'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
         }*/
-        password('Password', Secret.fromString(''), '')
+        nonStoredPasswordParam('UPLOAD', 'upload url for webserver\n\nSyntax of the upload value is of the form\n' +
+                'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
     }
 
     // The authentication token should not be on github.
