@@ -2,58 +2,19 @@
 // is already a jenkins package.
 //def jobBuilder = new JobsBuilder(this).folder('', {})
 //def jobBuilder = new JobsBuilder(this)
-def baseImageJobBuilder = new JobsBuilder(this).pipeline()
-def catroidroot = new JobsBuilder(this).pipeline({new CatroidData()})
+def baseImageJobBuilder = new JobsBuilder(this).folder('lab/Johannes_Trattner').pipeline()
 
-catroidroot.job("Build-Standalone_Test_JT") {
-    htmlDescription(['Builds a Catroid APP as a standalone APK.'])
+baseImageJobBuilder.job("Build_Docker_Base_Image") {
+    htmlDescription(['Builds the docker base Image and pushes it to the dockerhub'])
 
-    // !! DO NOT give Anonymous-Users read permission, otherwise the upload-token would be spoiled
-    jenkinsUsersPermissions(Permission.JobRead)
+    git(repo: 'https://github.com/Catrobat/Catroid', branch: '${gitBranch}', jenkinsfile: 'Jenkinsfile.baseDocker')
 
     parameters {
-        stringParam('DOWNLOAD', 'https://share.catrob.at/pocketcode/download/821.catrobat', 'Enter the Project ID you want to build as standalone')
-        stringParam('SUFFIX', 'standalone', '')
-        nonStoredPasswordParam('UPLOAD', 'upload url for webserver\n\nSyntax of the upload value is of the form\n' +
-                'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
-    }
-
-    // The authentication token should not be on github.
-    // That means it cannot be hardcode here.
-    // At the same time this information should be visible in the job itself.
-    // A workaround to achieve this is to store the information in global properties on jenkins master.
-    def token = GLOBAL_STANDALONE_AUTH_TOKEN
-
-    authenticationToken(token)
-    git(branch: 'master', jenkinsfile: 'Jenkinsfile.BuildStandalone')
-}
-
-/*
-baseImageJobBuilder.job("Build-Standalone_Test_JT") {
-    htmlDescription(['Builds a Catroid APP as a standalone APK.'])
-
-    // !! DO NOT give Anonymous-Users read permission, otherwise the upload-token would be spoiled
-    jenkinsUsersPermissions(Permission.JobRead)
-
-    parameters {
-        stringParam('DOWNLOAD', 'https://share.catrob.at/pocketcode/download/821.catrobat', 'Enter the Project ID you want to build as standalone')
-        stringParam('SUFFIX', 'standalone', '')
-        /*password {
-            name('UPLOAD')
-            description('upload url for webserver\n\nSyntax of the upload value is of the form\n' +
-                    'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
+        gitParam('gitBranch') {
+            description('Select the branch you want to build e.g. origin/master.')
+            type('BRANCH')
+            defaultValue('origin/develop')
         }
-        nonStoredPasswordParam('UPLOAD', 'upload url for webserver\n\nSyntax of the upload value is of the form\n' +
-                'https://pocketcode.org/ci/upload/1?token=UPLOADTOKEN')
     }
-
-    // The authentication token should not be on github.
-    // That means it cannot be hardcode here.
-    // At the same time this information should be visible in the job itself.
-    // A workaround to achieve this is to store the information in global properties on jenkins master.
-    def token = GLOBAL_STANDALONE_AUTH_TOKEN
-
-    authenticationToken(token)
-    git(repo: 'https://github.com/Catrobat/Catroid', branch: 'master', jenkinsfile: 'Jenkinsfile.BuildStandalone')
+    nightlyNew()
 }
-*/

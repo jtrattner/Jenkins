@@ -96,6 +96,16 @@ $bulletPointsStr    </ul>\n</div><div id=\"jenkins-info\" style=\"display: none;
         }
     }
 
+    void nightlyNew(String schedule='H 0 * * *') {
+        job.properties {
+            pipelineTriggers {
+                triggers {
+                    cron(schedule)
+                }
+            }
+        }
+    }
+
     void continuous(String schedule='H/5 * * * *') {
         job.triggers {
             scm(schedule)
