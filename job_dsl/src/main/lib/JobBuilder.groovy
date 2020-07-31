@@ -100,7 +100,9 @@ $bulletPointsStr    </ul>\n</div><div id=\"jenkins-info\" style=\"display: none;
         job.properties {
             pipelineTriggers {
                 triggers {
-                    cron(schedule)
+                    cron{
+                        spec(schedule)
+                    }
                 }
             }
         }
